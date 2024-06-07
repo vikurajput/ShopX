@@ -1,11 +1,23 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const context =useContext(mycontext);
     const {loading,setloading}=context;
+
+    //navigate
     const navigate=useNavigate;
+
+    // user signUp state
+    const [userSignup,setUserSignup]=useState({
+        name:"",
+        email:"",
+        password:"",
+        role:"user"
+    });
+
+    //user signUp function
     return (
         <div className='flex justify-center items-center h-screen'>
             {/* Login Form  */}
