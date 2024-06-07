@@ -6,7 +6,7 @@ import Layout from "../../component/layout/Layout";
 import Testimonial from "../../component/testimonial/Testimonial";
 import Track from "../../component/track/Track";
 import myContext from "../../component/context/myContext";
-import Loader from  "../../component/loader/Loader";
+
 
 
 const HomePage=()=>{
@@ -17,7 +17,7 @@ const HomePage=()=>{
             <HomePageProductCard/>
             <Track/>
             <Testimonial/>
-            <Loader />
+            
         </Layout>
     );
 }

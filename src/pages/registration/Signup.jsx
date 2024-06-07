@@ -1,9 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import myContext from "../../component/context/myContext";
+import toast from "react-hot-toast";
 
 const Signup = () => {
-    const context =useContext(mycontext);
+    const context =useContext(myContext);
     const {loading,setloading}=context;
 
     //navigate
@@ -18,6 +20,13 @@ const Signup = () => {
     });
 
     //user signUp function
+    const userSignupFunction=async()=>{
+        //validation
+        if(userSignup.name ===""||userSignup.email ===""||userSignup.password ===""){
+            return toast.error("All fields are required");
+        }
+    };
+
     return (
         <div className='flex justify-center items-center h-screen'>
             {/* Login Form  */}
