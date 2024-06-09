@@ -5,7 +5,7 @@ import MyContext from './myContext';
 function MyState({children}) {
     const[loading,setloading]=useState(false);
   return (
-    <MyContext.Provider value={{loading,setloading}}>
+    <MyContext.Provider value={{loading,setLoadingState : (value) => setloading(value) }}>
        {children}
     </MyContext.Provider>
   )

@@ -1,16 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React,{memo} from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link,json,useNavigate } from "react-router-dom";
 import myContext from "../../component/context/myContext";
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { auth, fireDB } from "../../firebase/FirebaseConfig";
+import { Timestamp,collection,addDoc } from "firebase/firestore";
+import { auth,fireDB } from "../../firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
 import Loader from "../../component/loader/Loader";
 
 const Signup = () => {
     const context = useContext(myContext);
-    const {loading, setLoading } = context;
+    const [loading, setLoading] = useState(context?.loading);
 
     // navigate 
     const navigate = useNavigate();
@@ -23,6 +24,12 @@ const Signup = () => {
         role: "user"
     });
 
+
+    useEffect(()=>{
+        setLoading(context.loading)
+    },[context.loading])
+
+
     /**========================================================================
      *                          User Signup Function 
     *========================================================================**/
@@ -32,8 +39,7 @@ const Signup = () => {
         if (userSignup.name === "" || userSignup.email === "" || userSignup.password === "") {
             toast.error("All Fields are required")
         }
-
-        setLoading(true);
+         context.setLoadingState(!loading);
         try {
             const users = await createUserWithEmailAndPassword(auth, userSignup.email, userSignup.password);
 
@@ -68,11 +74,11 @@ const Signup = () => {
 
             toast.success("Signup Successfully");
 
-            setLoading(false);
             navigate('/login')
         } catch (error) {
             console.log(error);
-            setLoading(false);
+        }finally{
+            context.setLoadingState(false);
         }
 
     }
