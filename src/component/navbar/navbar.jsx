@@ -1,8 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar/SearchBar";
-
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+    //get user from localStorage
+    const user = JSON.parse(localStorage.getItem('users'));
+
+    // navigate 
+    const navigate = useNavigate();
+
+    // logout function 
+    const logout = () => {
+        localStorage.clear('users');
+        navigate("/login")
+    }
+
+    // CartItems
+    const cartItems = useSelector((state) => state.cart);
+
     // navList Data
     const navList = (
         <ul className="flex space-x-3 text-white font-medium text-md px-5 ">
@@ -10,56 +25,51 @@ const Navbar = () => {
             <li>
                 <Link to={'/'}>Home</Link>
             </li>
-
             {/* All Product */}
             <li>
                 <Link to={'/allproduct'}>All Product</Link>
             </li>
-
             {/* Signup */}
-            <li>
+            {!user ? <li>
                 <Link to={'/signup'}>Signup</Link>
-            </li>
-
+            </li> : ""}
+            {/* Signup */}
+            {!user ? <li>
+                <Link to={'/login'}>Login</Link>
+            </li> : ""}
             {/* User */}
-            <li>
-                <Link to={'/user-dashboard'}>Vikram</Link>
-            </li>
-
+            {user?.role === "user" && <li>
+                <Link to={'/user-dashboard'}>User</Link>
+            </li>}
             {/* Admin */}
-            <li>
+            {user?.role === "admin" && <li>
                 <Link to={'/admin-dashboard'}>Admin</Link>
-            </li>
-
+            </li>}
             {/* logout */}
-            {/* <li>
-                logout
-            </li> */}
-
+            {user && <li className=" cursor-pointer" onClick={logout}>
+            </li>}
             {/* Cart */}
             <li>
                 <Link to={'/cart'}>
-                    Cart(0)
+                    Cart({cartItems.length})
                 </Link>
             </li>
         </ul>
     )
     return (
-        <nav className="bg-blue-400 sticky top-0">
+        <nav className="bg-blue-600 sticky top-0">
             {/* main  */}
             <div className="lg:flex lg:justify-between items-center py-3 lg:px-3 ">
                 {/* left  */}
                 <div className="left py-3 lg:py-0">
                     <Link to={'/'}>
-                    <h2 className=" font-bold text-white text-2xl text-center">ShopX</h2>
+                        <h2 className=" font-bold text-white text-2xl text-center">ShopX</h2>
                     </Link>
                 </div>
-
                 {/* right  */}
                 <div className="right flex justify-center mb-4 lg:mb-0">
                     {navList}
                 </div>
-
                 {/* Search Bar  */}
                 <SearchBar />
             </div>
