@@ -2,8 +2,16 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ProductDetail from '../../component/admin/ProductDetail';
 import OrderDetail from '../../component/admin/OrderDetail';
 import UserDetail from '../../component/admin/UserDetail';
+import { useContext } from 'react';
+import myContext from '../../component/context/myContext';
 
 const AdminDashboard = () => {
+     //get user from localStorage
+     const user=JSON.parse(localStorage.getItem('users'));
+    const context=useContext(myContext);
+    const {getAllProduct}=context;
+    
+
     return (
         <div>
             {/* Top */}
@@ -24,8 +32,26 @@ const AdminDashboard = () => {
                         </div>
                         {/* text  */}
                         <div className="">
-                            <h1 className=" text-center text-lg text-blue-500"><span className=" font-bold">Name :</span> Kamal Nayan Upadhyay</h1>
-                            <h1 className=" text-center text-lg text-blue-500"><span className=" font-bold">Email :</span> test@gmail.com</h1>
+                            {/* Name  */}
+                            <h1 className=" text-center text-lg text-blue-500">
+                                <span className=" font-bold">Name : </span>
+                                {user?.name}
+                            </h1>
+                            {/* Email  */}
+                            <h1 className=" text-center text-lg text-blue-500">
+                                <span className=" font-bold">Email : </span>
+                                {user?.email}
+                            </h1>
+                            {/* Date  */}
+                            <h1 className=" text-center text-lg text-blue-500">
+                                <span className=" font-bold">Date : </span>
+                                {user?.date}
+                            </h1>
+                            {/* Role  */}
+                            <h1 className=" text-center text-lg text-blue-500">
+                                <span className=" font-bold">Role : </span>
+                                {user?.role}
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -60,7 +86,7 @@ const AdminDashboard = () => {
                                         </svg>
 
                                     </div>
-                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >10</h2>
+                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >{getAllProduct.length}</h2>
                                     <p className=" text-blue-500  font-bold" >Total Products</p>
                                 </div>
                             </Tab>
@@ -96,7 +122,7 @@ const AdminDashboard = () => {
 
                             {/* Total User  */}
                             <Tab className="p-4 md:w-1/3 sm:w-1/2 w-full cursor-pointer">
-                                <div className=" border bg-blue-50 hover:bg-blue-100 border-pink-100 px-4 py-3 rounded-xl" >
+                                <div className=" border bg-blue-50 hover:bg-blue-100 border-blue-100 px-4 py-3 rounded-xl" >
                                     <div className="text-blue-500 w-12 h-12 mb-3 inline-block" >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

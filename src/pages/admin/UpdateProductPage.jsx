@@ -1,44 +1,46 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import myContext from "../../component/context/myContext";
-import toast from "react-hot-toast";
+import { useContext, useEffect, useState } from "react";
+import { Timestamp, doc, getDoc, setDoc } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
-import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import Loader from "../../component/loader/Loader";
 
 const categoryList = [
     {
-        name: 'fashion'
+        name: 'Fashion'
     },
     {
-        name: 'shirt'
+        name: 'Shirt'
     },
     {
-        name: 'jacket'
+        name: 'Jacket'
     },
     {
-        name: 'mobile'
+        name: 'Mobile'
     },
     {
-        name: 'laptop'
+        name: 'Laptop'
     },
     {
-        name: 'shoes'
+        name: 'Shoes'
     },
     {
-        name: 'home'
+        name: 'Home'
     },
     {
-        name: 'books'
+        name: 'Books'
     }
 ]
 
-const AddProductPage = () => {
+const UpdateProductPage = () => {
     const context = useContext(myContext);
-    const [loading, setLoading] = useState(context?.loading);
+    const { loading, setLoading, getAllProductFunction } = context;
 
     // navigate 
     const navigate = useNavigate();
+    const { id } = useParams()
+    console.log(id)
 
     // product state
     const [product, setProduct] = useState({
@@ -47,7 +49,6 @@ const AddProductPage = () => {
         productImageUrl: "",
         category: "",
         description: "",
-        quantity : 1,
         time: Timestamp.now(),
         date: new Date().toLocaleString(
             "en-US",
@@ -59,27 +60,50 @@ const AddProductPage = () => {
         )
     });
 
-
-    // Add Product Function
-    const addProductFunction = async () => {
-        if (product.title == "" || product.price == "" || product.productImageUrl == "" || product.category == "" || product.description == "") {
-            return toast.error("all fields are required")
-        }
-
+    // Get Single Product Function
+    const getSingleProductFunction = async () => {
         setLoading(true);
         try {
-            const productRef = collection(fireDB, 'products');
-            await addDoc(productRef, product)
-            toast.success("Add product successfully");
-            navigate('/admin-dashboard')
-            setLoading(false)
+            const productTemp = await getDoc(doc(fireDB, "products", id))
+            //   console.log(product.data())
+            const product = productTemp.data();
+            setProduct({
+                title: product?.title,
+                price: product?.price,
+                productImageUrl: product?.productImageUrl,
+                category: product?.category,
+                description: product?.description,
+                quantity : product?.quantity,
+                time: product?.time,
+                date: product?.date
+            })
+            setLoading(false);
+
         } catch (error) {
             console.log(error);
-            setLoading(false)
-            toast.error("Add product failed");
+            setLoading(false);
         }
-
     }
+
+    const updateProduct = async () => {
+        setLoading(true)
+        try {
+
+            await setDoc(doc(fireDB, 'products', id), product)
+            toast.success("Product Updated successfully")
+            getAllProductFunction();
+            setLoading(false)
+            navigate('/admin-dashboard')
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        getSingleProductFunction();
+    }, []);
     return (
         <div>
             <div className='flex justify-center items-center h-screen'>
@@ -90,7 +114,7 @@ const AddProductPage = () => {
                     {/* Top Heading  */}
                     <div className="mb-5">
                         <h2 className='text-center text-2xl font-bold text-blue-500 '>
-                            Add Product
+                            Update Product
                         </h2>
                     </div>
 
@@ -180,14 +204,14 @@ const AddProductPage = () => {
                         </textarea>
                     </div>
 
-                    {/* Add Product Button  */}
+                    {/* Update Product Button  */}
                     <div className="mb-3">
                         <button
-                            onClick={addProductFunction}
+                            onClick={updateProduct}
                             type='button'
                             className='bg-blue-500 hover:bg-blue-600 w-full text-white text-center py-2 font-bold rounded-md '
                         >
-                            Add Product
+                            Update Product
                         </button>
                     </div>
                 </div>
@@ -196,4 +220,4 @@ const AddProductPage = () => {
     );
 }
 
-export default AddProductPage;
+export default UpdateProductPage;

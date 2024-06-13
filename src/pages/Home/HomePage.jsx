@@ -21,7 +21,7 @@ const HomePage=()=>{
             <HomePageProductCard/>
             <Track/>
             <Testimonial/>
-            <Loader/>
+
         </Layout>
     );
 }

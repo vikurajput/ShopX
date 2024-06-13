@@ -14,21 +14,40 @@ const products = [
 ]
 
 const UserDashboard = () => {
+    const user=JSON.parse(localStorage.getItem('users'));
     return (
         <Layout>
             <div className=" container mx-auto px-4 py-5 lg:py-8">
                 {/* Top  */}
                 <div className="top ">
                     {/* main  */}
-                    <div className=" bg-pink-50 py-5 rounded-xl border border-pink-100">
+                    <div className=" bg-blue-50 py-5 rounded-xl border border-blue-100">
                         {/* image  */}
                         <div className="flex justify-center">
                             <img src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png" alt="" />
                         </div>
                         {/* text  */}
                         <div className="">
-                            <h1 className=" text-center text-lg"><span className=" font-bold">Name :</span> Kamal Nayan Upadhyay</h1>
-                            <h1 className=" text-center text-lg"><span className=" font-bold">Email :</span> test@gmail.com</h1>
+                            {/* Name  */}
+                            <h1 className=" text-center text-lg">
+                                <span className=" font-bold">Name : </span>
+                                {user?.name}
+                            </h1>
+                            {/* Email  */}
+                            <h1 className=" text-center text-lg">
+                                <span className=" font-bold">Email : </span>
+                                {user?.email}
+                            </h1>
+                            {/* Date  */}
+                            <h1 className=" text-center text-lg">
+                                <span className=" font-bold">Date : </span>
+                                {user?.date}
+                            </h1>
+                            {/* Role  */}
+                            <h1 className=" text-center text-lg">
+                                <span className=" font-bold">Role : </span>
+                                {user?.role}
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -41,9 +60,9 @@ const UserDashboard = () => {
                         <h2 className=" text-2xl lg:text-3xl font-bold">Order Details</h2>
 
                         {/* main 2 */}
-                        <div className="mt-5 flex flex-col overflow-hidden rounded-xl border border-pink-100 md:flex-row">
+                        <div className="mt-5 flex flex-col overflow-hidden rounded-xl border border-blue-100 md:flex-row">
                             {/* main 3  */}
-                            <div className="w-full border-r border-pink-100 bg-pink-50 md:max-w-xs">
+                            <div className="w-full border-r border-blue-100 bg-blue-50 md:max-w-xs">
                                 {/* left  */}
                                 <div className="p-8">
                                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-1">
