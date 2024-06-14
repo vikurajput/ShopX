@@ -42,8 +42,8 @@ const Navbar = () => {
             </li> : ""}
 
             {/* User */}
-            {user?.role === "user" && <li>
-                <Link to={'/user-dashboard'}>User</Link>
+            {user?.role === "user" && <li>  
+                <Link to={'/user-dashboard'}>{user.name}</Link>
             </li>}
 
             {/* Admin */}
@@ -53,7 +53,7 @@ const Navbar = () => {
 
             {/* logout */}
             {user && <li className=" cursor-pointer" onClick={logout}>
-                logout
+                Logout
             </li>}
 
             {/* Cart */}

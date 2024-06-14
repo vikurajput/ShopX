@@ -4,15 +4,18 @@ import OrderDetail from '../../component/admin/OrderDetail';
 import UserDetail from '../../component/admin/UserDetail';
 import { useContext } from 'react';
 import myContext from '../../component/context/myContext';
+import Navbar from '../../component/navbar/navbar';
 
 const AdminDashboard = () => {
      //get user from localStorage
      const user=JSON.parse(localStorage.getItem('users'));
     const context=useContext(myContext);
-    const {getAllProduct}=context;
+    const {getAllProduct,getAllOrder,getAllUser}=context;
     
 
     return (
+        <>
+        <Navbar/>
         <div>
             {/* Top */}
             <div className="top mb-5 px-5 mt-5">
@@ -115,7 +118,7 @@ const AdminDashboard = () => {
                                             <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
                                         </svg>
                                     </div>
-                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >10</h2>
+                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >{getAllOrder.length}</h2>
                                     <p className=" text-blue-500  font-bold" >Total Order</p>
                                 </div>
                             </Tab>
@@ -143,8 +146,8 @@ const AdminDashboard = () => {
                                         </svg>
 
                                     </div>
-                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >10</h2>
-                                    <p className=" text-blue-500  font-bold" >Total Order</p>
+                                    <h2 className="title-font font-medium text-3xl text-blue-400 fonts1" >{getAllUser.length}</h2>
+                                    <p className=" text-blue-500  font-bold" >Total User</p>
                                 </div>
                             </Tab>
                         </TabList>
@@ -164,7 +167,8 @@ const AdminDashboard = () => {
                 </div>
             </div>
         </div>
-    );
+    </>);
+
 }
 
 export default AdminDashboard;
