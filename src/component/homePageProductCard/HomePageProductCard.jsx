@@ -81,7 +81,7 @@ const HomePageProductCard = () => {
                                                     ?
                                                     <button
                                                         onClick={() => deleteCart(item)}
-                                                        className=" bg-red-700 hover:bg-blue-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                        className=" bg-red-400 hover:bg-red-700 w-full text-white py-[4px] rounded-lg font-bold">
 
                                                         Delete From Cart
                                                     </button>
