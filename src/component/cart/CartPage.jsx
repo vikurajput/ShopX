@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../layout/Layout";
 import { Trash } from 'lucide-react'
-import { decrementQuantity, deleteFromCart, incrementQuantity } from "../../redux/cartSlice";
+import { decrementQuantity, deleteFromCart, incrementQuantity,clearCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
@@ -89,6 +89,7 @@ const CartPage = () => {
                 pincode: "",
                 mobileNumber: "",
             })
+            dispatch(clearCart());
             toast.success("Order Placed Successfull")
         } catch (error) {
             console.log(error)
@@ -173,7 +174,7 @@ const CartPage = () => {
                                     </>
                                     :
 
-                                    <h1>Not Found</h1>}
+                                    <h1>No Product Added</h1>}
                             </ul>
                         </section>
                         {/* Order summary */}
