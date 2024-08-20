@@ -21,9 +21,15 @@ const HomePageProductCard = () => {
 
     // add to cart function
     const addCart = (item) => {
-        dispatch(addToCart(item));
-        toast.success("Added to cart")
-    }
+        const existingCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+    
+        if (existingCartItem && existingCartItem.quantity >= 3) {
+            toast.error("You can only add up to 3 of this item.");
+        } else {
+            dispatch(addToCart(item));
+            toast.success("Added to cart");
+        }
+    };
 
 
     // delete from cart function
@@ -76,25 +82,11 @@ const HomePageProductCard = () => {
                                             </h1>
 
                                             <div className="flex justify-center ">
-                                                {cartItems.some((p) => p.id === item.id)
-
-                                                    ?
-                                                    <button
-                                                        onClick={() => deleteCart(item)}
-                                                        className=" bg-red-400 hover:bg-red-700 w-full text-white py-[4px] rounded-lg font-bold">
-
-                                                        Delete From Cart
-                                                    </button>
-
-                                                    :
-
-                                                    <button
-                                                        onClick={() => addCart(item)}
-                                                        className=" bg-blue-500 hover:bg-blue-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                        Add To cart
-                                                    </button>
-
-                                                }
+                                            <button
+                                                    onClick={() => addCart(item)}
+                                                    className=" bg-blue-500 hover:bg-blue-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                    Add To Cart
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
