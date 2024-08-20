@@ -15,11 +15,17 @@ const AllProduct = () => {
     const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
+    // add to cart function
     const addCart = (item) => {
-        // console.log(item)
-        dispatch(addToCart(item));
-        toast.success("Add to cart")
-    }
+        const existingCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+    
+        if (existingCartItem && existingCartItem.quantity >= 3) {
+            toast.error("You can only add up to 3 of this item.");
+        } else {
+            dispatch(addToCart(item));
+            toast.success("Added to cart");
+        }
+    };
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
@@ -70,23 +76,11 @@ const AllProduct = () => {
 
                                             <div
                                                 className="flex justify-center ">
-                                                {cartItems.some((p)=> p.id === item.id) 
-                                                
-                                                ?
-                                                <button
-                                                    onClick={() => deleteCart(item)}
-                                                    className="bg-red-400 hover:bg-red-700 w-full text-white py-[4px] rounded-lg font-bold">
-                                                        Delete To Cart
-                                                </button>
-
-                                                : 
-
                                                 <button
                                                     onClick={() => addCart(item)}
                                                     className=" bg-blue-500 hover:bg-blue-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                        Add To Cart
+                                                    Add To Cart
                                                 </button>
-                                            }
                                             </div>
                                         </div>
                                     </div>
