@@ -87,7 +87,7 @@ const UserDashboard = () => {
 
                                                             <div className="mb-4">
                                                                 <div className="text-sm font-semibold">Date</div>
-                                                                <div className="text-sm font-medium text-gray-900">{date}</div>
+                                                                <div className="text-sm font-medium text-gray-900">{order.date}</div>
                                                             </div>
 
                                                             <div className="mb-4">
